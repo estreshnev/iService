@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="iService - Качественный ремонт цифровой техники в Вологде. Более 10 лет опыта. Гарантия до 90 дней. Бесплатная диагностика за 15 минут.">
+    <title>iService - Ремонт цифровой техники в Вологде | iPhone, Android, ноутбуки, планшеты</title>
+
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Google Fonts - Premium Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- AOS Animation Library CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="logo">
+                    <a href="index.html">
+                        <img src="logo.svg" alt="iService" class="logo-image">
+                        <span class="logo-text"><span class="logo-i">i</span>Service</span>
+                    </a>
+                </div>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="index.html" class="nav-link active">Главная</a></li>
+                    <li><a href="services.html" class="nav-link">Услуги</a></li>
+                    <li><a href="about.html" class="nav-link">О нас</a></li>
+                    <li><a href="contact.html" class="nav-link">Контакты</a></li>
+                    <li><a href="prices.html" class="btn btn-primary">Рассчитать стоимость</a></li>
+                </ul>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scroll-progress"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-wrapper">
+                <div class="hero-content" data-aos="fade-up">
+                    <!-- Badge -->
+                    <div class="hero-badge">
+                        <i class="fas fa-clock"></i>
+                        <span>Диагностика за 15 минут</span>
+                    </div>
+
+                    <!-- Heading -->
+                    <h1 class="hero-title">
+                        Ремонт техники<br>
+                        <span class="text-accent">с выездом на дом</span>
+                    </h1>
+
+                    <!-- Description -->
+                    <p class="hero-description">
+                        Профессиональный ремонт смартфонов, планшетов и ноутбуков в Вологде. Приезжаем в удобное время, ремонтируем на месте. Гарантия до 90 дней.
+                    </p>
+
+                    <!-- Buttons -->
+                    <div class="hero-buttons">
+                        <a href="tel:+79115237191" class="btn btn-primary">
+                            <i class="fas fa-phone"></i>
+                            Вызвать мастера
+                        </a>
+                        <a href="#how-it-works" class="btn btn-text">
+                            Как это работает
+                            <i class="fas fa-arrow-down"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Lottie Animation -->
+                <div class="hero-animation" data-aos="fade-left" data-aos-delay="200">
+                    <lottie-player
+                        src="https://assets-v2.lottiefiles.com/a/966e57bc-116d-11ee-b500-671de70066ae/qN8ixMUOZk.json"
+                        background="transparent"
+                        speed="1"
+                        style="width: 100%; height: 100%;"
+                        loop
+                        autoplay>
+                    </lottie-player>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Как это работает</h2>
+                <p>Простой процесс от заявки до готового устройства</p>
+            </div>
+
+            <div class="steps-grid">
+                <div class="step-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="step-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3>1. Запишитесь онлайн</h3>
+                    <p>Выберите ремонт, укажите место и выберите удобное время за 2 минуты.</p>
+                </div>
+
+                <div class="step-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="step-icon">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <h3>2. Приезжаем к вам</h3>
+                    <p>Выезжаем с мобильной мастерской, полностью оборудованной. Не нужно никуда ехать.</p>
+                </div>
+
+                <div class="step-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="step-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>3. Ремонт на месте</h3>
+                    <p>Ремонт за 30 минут прямо перед вами. Уезжаете с телефоном как новым.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="stat-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="stat-number" data-count="10">0</div>
+                    <div class="stat-label">Лет опыта</div>
+                </div>
+                <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-number" data-count="15">0</div>
+                    <div class="stat-label">Минут диагностика</div>
+                </div>
+                <div class="stat-item" data-aos="fade-up" data-aos-delay="300">
+                    <div class="stat-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="stat-number" data-count="90">0</div>
+                    <div class="stat-label">Дней гарантия</div>
+                </div>
+                <div class="stat-item" data-aos="fade-up" data-aos-delay="400">
+                    <div class="stat-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div class="stat-number" data-count="100">0</div>
+                    <div class="stat-label">% оригинальных запчастей</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Preview Section -->
+    <section class="services-preview">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Наши услуги</h2>
+                <p class="section-subtitle">Ремонт цифровой техники любой сложности</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="service-icon">
+                        <i class="fab fa-apple"></i>
+                    </div>
+                    <h3 class="service-title">Ремонт iPhone и iPad</h3>
+                    <p class="service-description">Срочный ремонт техники Apple. Замена стекла от 1 часа. Оригинальные запчасти в наличии</p>
+                    <a href="services.html" class="service-link">
+                        Подробнее <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="service-title">Ремонт смартфонов</h3>
+                    <p class="service-description">Ремонт телефонов всех моделей: Samsung, Xiaomi, Huawei и другие. Любая сложность</p>
+                    <a href="services.html" class="service-link">
+                        Подробнее <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="service-icon">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                    <h3 class="service-title">Ремонт ноутбуков и ПК</h3>
+                    <p class="service-description">Ремонт и настройка ноутбуков, компьютеров. Чистка, замена комплектующих, установка ПО</p>
+                    <a href="services.html" class="service-link">
+                        Подробнее <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="why-us">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Почему выбирают нас</h2>
+                <p class="section-subtitle">Наши преимущества</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card" data-aos="fade-right" data-aos-delay="100">
+                    <div class="feature-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <h3>Бесплатная диагностика</h3>
+                    <p>Диагностика за 15 минут абсолютно бесплатно</p>
+                </div>
+                <div class="feature-card" data-aos="fade-right" data-aos-delay="200">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Гарантия до 90 дней</h3>
+                    <p>Послегарантийное обслуживание на все виды работ</p>
+                </div>
+                <div class="feature-card" data-aos="fade-left" data-aos-delay="100">
+                    <div class="feature-icon">
+                        <i class="fas fa-ruble-sign"></i>
+                    </div>
+                    <h3>Фиксированные цены</h3>
+                    <p>Оплата только за успешно выполненный ремонт</p>
+                </div>
+                <div class="feature-card" data-aos="fade-left" data-aos-delay="200">
+                    <div class="feature-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>Оригинальные запчасти</h3>
+                    <p>В наличии оригинальные комплектующие для быстрого ремонта</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content" data-aos="zoom-in">
+                <h2 class="cta-title">Нужен ремонт техники?</h2>
+                <p class="cta-description">Позвоните нам прямо сейчас и получите бесплатную диагностику за 15 минут</p>
+                <div class="cta-buttons">
+                    <a href="tel:+79115237191" class="btn btn-white btn-large">
+                        Позвонить сейчас
+                        <i class="fas fa-phone"></i>
+                    </a>
+                    <a href="prices.html" class="btn btn-outline-white btn-large">
+                        Рассчитать стоимость
+                        <i class="fas fa-calculator"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <img src="logo.svg" alt="iService35" class="footer-logo-image">
+                    </div>
+                    <p class="footer-description">
+                        Качественный ремонт цифровой техники в Вологде. Более 10 лет опыта. Гарантия качества.
+                    </p>
+                    <div class="social-links">
+                        <a href="https://vk.com/i_service" target="_blank" class="social-link"><i class="fab fa-vk"></i></a>
+                        <a href="https://wa.me/79115237191" target="_blank" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                        <a href="viber://chat?number=79115237191" class="social-link"><i class="fab fa-viber"></i></a>
+                        <a href="https://t.me/iservice35" target="_blank" class="social-link"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">Навигация</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="services.html">Услуги</a></li>
+                        <li><a href="about.html">О нас</a></li>
+                        <li><a href="contact.html">Контакты</a></li>
+                        <li><a href="prices.html">Цены</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">Контакты</h4>
+                    <ul class="footer-contacts">
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <a href="tel:+79115237191">+7 (911) 523-71-91</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <a href="tel:504888">504888</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:iService35@yandex.ru">iService35@yandex.ru</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>г. Вологда, ул. Предтеченская 31, офис 216</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-clock"></i>
+                            <span>Пн-Пт: 10:00-18:00</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 iService35.ru. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- GSAP Animation Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+    <!-- Typed.js for typing animation -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.16"></script>
+
+    <!-- Lottie Animation Player -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script src="js/animations.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+</html>
