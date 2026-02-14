@@ -8,7 +8,7 @@ if (typeof AOS !== 'undefined') {
         duration: 800,
         easing: 'ease-in-out',
         once: true,
-        offset: 100,
+        offset: 20,
         delay: 0,
     });
 
