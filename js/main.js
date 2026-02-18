@@ -138,44 +138,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.addEventListener('scroll', setActiveNavLink);
 
-    // ========== Section Navigation Indicators ==========
-    const sectionIndicators = document.querySelectorAll('.section-indicator');
-    const allSections = document.querySelectorAll('section:not(.footer)');
-
-    // Click handler for indicators
-    sectionIndicators.forEach(indicator => {
-        indicator.addEventListener('click', function() {
-            const sectionIndex = parseInt(this.getAttribute('data-section'));
-            const targetSection = allSections[sectionIndex];
-
-            if (targetSection) {
-                targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        });
-    });
-
-    // Update active indicator on scroll
-    const indicatorObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const sectionIndex = Array.from(allSections).indexOf(entry.target);
-
-                sectionIndicators.forEach(indicator => {
-                    indicator.classList.remove('active');
-                });
-
-                const activeIndicator = document.querySelector(`.section-indicator[data-section="${sectionIndex}"]`);
-                if (activeIndicator) {
-                    activeIndicator.classList.add('active');
-                }
-            }
-        });
-    }, { threshold: 0.5 });
-
-    allSections.forEach(section => {
-        indicatorObserver.observe(section);
-    });
-
     // ========== Back to Top Button (Optional) ==========
     const createBackToTop = () => {
         const button = document.createElement('button');
