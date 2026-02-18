@@ -76,7 +76,6 @@
 html {
     scroll-behavior: smooth;
     font-size: 16px;
-    scroll-snap-type: y mandatory;
     overflow-y: scroll;
     height: 100%;
 }
@@ -138,11 +137,9 @@ img {
     }
 }
 
-/* ========== Full-Screen Sections with Scroll Snap ========== */
+/* ========== Full-Screen Sections ========== */
 section {
     min-height: 100vh;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -732,21 +729,30 @@ section {
 /* Responsive */
 @media (max-width: 968px) {
     .hero {
-        padding: 4rem 0 3rem;
+        padding: 6rem 0 2rem;
     }
 
     .hero-wrapper {
         grid-template-columns: 1fr;
-        gap: 3rem;
+        gap: 2rem;
     }
 
     .hero-content {
         text-align: center;
+        order: 1;
+    }
+
+    .hero-animation {
+        order: 2;
+        max-width: 400px;
+        min-height: 300px;
+        margin: 0 auto;
     }
 
     .hero-description {
         margin-left: auto;
         margin-right: auto;
+        font-size: 1rem;
     }
 
     .hero-buttons {
@@ -758,30 +764,57 @@ section {
         margin-right: auto;
     }
 
-    .hero-animation {
-        max-width: 600px;
-        min-height: 400px;
-        margin: 0 auto;
+    .hero-badge {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-cta {
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 
 @media (max-width: 640px) {
+    .hero {
+        padding: 5rem 0 2rem;
+    }
+
     .hero-title {
-        font-size: 2rem;
+        font-size: 1.75rem;
+        line-height: 1.3;
+        margin-bottom: 1rem;
     }
 
     .hero-description {
-        font-size: 1rem;
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-badge {
+        font-size: 0.8rem;
+        padding: 0.4rem 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .hero-cta-label {
+        font-size: 0.85rem;
     }
 
     .hero-buttons {
-        flex-direction: column;
+        flex-direction: row;
         width: 100%;
+        gap: 0.5rem;
     }
 
-    .hero-buttons .btn {
-        width: 100%;
-        justify-content: center;
+    .hero-buttons .btn-social {
+        flex: 1;
+        padding: 0.6rem 0.5rem;
+        font-size: 0.8rem;
+    }
+
+    .hero-buttons .btn-social-name {
+        font-size: 0.85rem;
     }
 
     .hero-trust {
@@ -790,11 +823,17 @@ section {
         padding: 1rem;
         width: 100%;
         align-items: center;
+        font-size: 0.85rem;
     }
 
     .hero-trust-divider {
         width: 40px;
         height: 1px;
+    }
+
+    .hero-animation {
+        max-width: 300px;
+        min-height: 250px;
     }
 }
 
@@ -1272,7 +1311,6 @@ section {
     color: var(--white);
     padding: 4rem 0 2rem;
     min-height: auto !important;
-    scroll-snap-align: none !important;
 }
 
 .footer-content {
@@ -1434,13 +1472,7 @@ section {
 
 /* ========== Responsive Design ========== */
 @media (max-width: 968px) {
-    /* Disable aggressive scroll snap on tablets and mobile */
-    html {
-        scroll-snap-type: y proximity;
-    }
-
     section {
-        scroll-snap-stop: normal;
         min-height: auto;
         padding: 3rem 0;
     }
@@ -1486,17 +1518,6 @@ section {
 
     .section-header {
         margin-bottom: 2rem;
-    }
-}
-
-@media (max-width: 480px) {
-    /* Disable scroll snap completely on small mobile */
-    html {
-        scroll-snap-type: none;
-    }
-
-    section {
-        scroll-snap-align: none;
     }
 }
 
