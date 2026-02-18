@@ -308,7 +308,6 @@ section {
 .nav-menu .btn {
     padding: 0.4rem 1.4rem;
     font-size: 0.9rem;
-    animation: pulse 2s ease-in-out infinite;
 }
 
 .nav-phone {
@@ -1512,43 +1511,25 @@ section {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    padding: 0.75rem;
+    padding: 1rem;
     border-radius: var(--radius-full);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
+    animation: float-pulse 3s ease-in-out infinite;
 }
 
 .floating-btn {
-    width: 56px;
-    height: 56px;
+    width: 64px;
+    height: 64px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     color: var(--white);
     text-decoration: none;
     transition: all 0.3s ease;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     position: relative;
-    overflow: hidden;
-}
-
-.floating-btn::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    transform: translate(-50%, -50%);
-    transition: width 0.4s, height 0.4s;
-}
-
-.floating-btn:hover::before {
-    width: 100%;
-    height: 100%;
 }
 
 .floating-btn:hover {
@@ -1580,17 +1561,28 @@ section {
     box-shadow: 0 8px 20px rgba(38, 165, 228, 0.4);
 }
 
+@keyframes float-pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 12px 40px rgba(0, 177, 235, 0.2), 0 4px 12px rgba(0, 177, 235, 0.15);
+    }
+}
+
 @media (max-width: 768px) {
     .floating-buttons {
         bottom: 1rem;
         right: 1rem;
         gap: 0.5rem;
-        padding: 0.5rem;
+        padding: 0.75rem;
     }
 
     .floating-btn {
-        width: 48px;
-        height: 48px;
-        font-size: 1.2rem;
+        width: 52px;
+        height: 52px;
+        font-size: 1.4rem;
     }
 }
