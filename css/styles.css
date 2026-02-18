@@ -388,6 +388,10 @@ section {
     line-height: 1.4;
 }
 
+.mobile-br {
+    display: none;
+}
+
 @media (max-width: 768px) {
     .locations-bar {
         top: 70px;
@@ -397,17 +401,25 @@ section {
     .locations-wrapper {
         flex-direction: column;
         gap: 0.75rem;
+        padding: 0 1rem;
     }
 
     .location-item {
         padding: 0.4rem 1rem;
         width: 100%;
+        min-width: 0;
         justify-content: center;
     }
 
     .location-address {
         font-size: 0.85rem;
         text-align: center;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .mobile-br {
+        display: inline;
     }
 }
 
