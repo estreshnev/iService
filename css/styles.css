@@ -329,10 +329,11 @@ section {
 
 /* ========== Locations Bar ========== */
 .locations-bar {
-    position: fixed;
-    top: 80px;
+    position: relative;
+    top: 0;
     left: 0;
     right: 0;
+    margin-top: 84px;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -394,7 +395,7 @@ section {
 
 @media (max-width: 768px) {
     .locations-bar {
-        top: 70px;
+        margin-top: 84px;
         padding: 0.5rem 0;
     }
 
@@ -595,7 +596,8 @@ section {
 .hero {
     background: var(--white);
     overflow: hidden;
-    padding-top: calc(80px + 60px); /* Account for navbar + locations bar */
+    padding-top: 3.5rem; /* Extra-large gap below locations bar */
+    justify-content: flex-start; /* Disable vertical centering for this section */
     position: relative;
 }
 
@@ -761,7 +763,7 @@ section {
 /* Responsive */
 @media (max-width: 968px) {
     .hero {
-        padding: calc(70px + 120px) 0 2rem 0;
+        padding: 3rem 0 2rem 0;
     }
 
     .hero-wrapper {
@@ -809,7 +811,7 @@ section {
 
 @media (max-width: 640px) {
     .hero {
-        padding: calc(70px + 120px) 0 2rem 0;
+        padding: 3rem 0 2rem 0;
     }
 
     .hero-title {
@@ -1511,7 +1513,7 @@ section {
 
     .hero {
         min-height: 100vh;
-        padding-top: 80px;
+        padding-top: 3rem;
     }
 
     .how-it-works,
