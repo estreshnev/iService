@@ -64,6 +64,9 @@
     --transition-medium: 0.3s ease;
     --transition-slow: 0.5s ease;
     --transition-premium: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Header/Layout */
+    --navbar-offset: 84px;
 }
 
 /* ========== Global Reset & Base Styles ========== */
@@ -333,7 +336,7 @@ section {
     top: 0;
     left: 0;
     right: 0;
-    margin-top: 84px;
+    margin-top: var(--navbar-offset);
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -395,7 +398,7 @@ section {
 
 @media (max-width: 768px) {
     .locations-bar {
-        margin-top: 84px;
+        margin-top: var(--navbar-offset);
         padding: 0.5rem 0;
     }
 
@@ -1506,14 +1509,13 @@ section {
 
 /* ========== Responsive Design ========== */
 @media (max-width: 968px) {
-    section {
+    section:not(.hero) {
         min-height: auto;
         padding: 3rem 0;
     }
 
     .hero {
         min-height: 100vh;
-        padding-top: 3rem;
     }
 
     .how-it-works,
@@ -1546,7 +1548,7 @@ section {
     }
 
     /* Mobile: make sections more flexible */
-    section {
+    section:not(.hero) {
         padding: 2rem 0;
     }
 

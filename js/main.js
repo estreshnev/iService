@@ -27,9 +27,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ========== Navbar Scroll Effect ==========
     const navbar = document.getElementById('navbar');
-    let lastScroll = 0;
-
     window.addEventListener('scroll', function() {
+        if (!navbar) return;
         const currentScroll = window.pageYOffset;
 
         if (currentScroll > 100) {
@@ -37,8 +36,6 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             navbar.classList.remove('scrolled');
         }
-
-        lastScroll = currentScroll;
     });
 
     // ========== Scroll Progress Bar ==========
@@ -117,15 +114,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ========== Active Navigation Link on Scroll ==========
     const sections = document.querySelectorAll('section[id]');
+    const sectionNavLinks = Array.from(navLinks).filter(link => {
+        const href = link.getAttribute('href') || '';
+        return href.startsWith('#');
+    });
 
     function setActiveNavLink() {
+        // Scroll spy is only relevant for one-page navigation with hash links.
+        if (sectionNavLinks.length === 0) return;
+
         const scrollY = window.pageYOffset;
 
         sections.forEach(section => {
             const sectionHeight = section.offsetHeight;
             const sectionTop = section.offsetTop - 100;
             const sectionId = section.getAttribute('id');
-            const navLink = document.querySelector(`.nav-link[href*="${sectionId}"]`);
+            const navLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
 
             if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
                 navLinks.forEach(link => link.classList.remove('active'));

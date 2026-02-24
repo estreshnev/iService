@@ -260,29 +260,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // ========== Stats Counter Animation with GSAP ==========
-        const statNumbers = document.querySelectorAll('.stat-number[data-count]');
-
-        statNumbers.forEach(stat => {
-            const target = parseInt(stat.getAttribute('data-count'));
-
-            gsap.from(stat, {
-                scrollTrigger: {
-                    trigger: stat,
-                    start: 'top 80%',
-                    toggleActions: 'play none none none'
-                },
-                textContent: 0,
-                duration: 2,
-                ease: 'power1.out',
-                snap: { textContent: 1 },
-                onUpdate: function() {
-                    const value = Math.floor(this.targets()[0].textContent);
-                    stat.textContent = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-                }
-            });
-        });
-
         // ========== Section Title Animation ==========
         const sectionTitles = document.querySelectorAll('.section-title');
 
@@ -376,34 +353,6 @@ document.addEventListener('DOMContentLoaded', function() {
             y: 50,
             duration: 1,
             ease: 'power3.out'
-        });
-
-        // ========== Smooth Scroll with GSAP ==========
-        const anchorLinks = document.querySelectorAll('a[href^="#"]');
-
-        anchorLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
-
-                if (href === '#') return;
-
-                const target = document.querySelector(href);
-                if (target) {
-                    e.preventDefault();
-                    const navbar = document.getElementById('navbar');
-                    const navbarHeight = navbar ? navbar.offsetHeight : 0;
-                    const targetPosition = target.offsetTop - navbarHeight;
-
-                    gsap.to(window, {
-                        scrollTo: {
-                            y: targetPosition,
-                            autoKill: true
-                        },
-                        duration: 1,
-                        ease: 'power3.inOut'
-                    });
-                }
-            });
         });
 
         // ========== Refresh ScrollTrigger on Load ==========
