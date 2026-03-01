@@ -651,6 +651,8 @@ section {
     background: var(--white);
     overflow: hidden;
     padding-top: 3.5rem; /* Extra-large gap below locations bar */
+    padding-bottom: 3.5rem;
+    min-height: auto;
     justify-content: flex-start; /* Disable vertical centering for this section */
     position: relative;
 }
@@ -1033,7 +1035,7 @@ section {
 /* Responsive */
 @media (max-width: 968px) {
     .hero {
-        padding: 3rem 0 2rem 0;
+        padding: 3rem 0;
     }
 
     .hero-wrapper {
@@ -1082,7 +1084,7 @@ section {
 
 @media (max-width: 640px) {
     .hero {
-        padding: 3rem 0 2rem 0;
+        padding: 2.5rem 0;
     }
 
     .hero-title {
@@ -1835,7 +1837,7 @@ section {
     }
 
     .hero {
-        min-height: 100vh;
+        min-height: auto;
     }
 
     .how-it-works,
