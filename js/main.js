@@ -4,6 +4,138 @@
 
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
+    // ========== Hero Device Select ==========
+    const deviceSelectRoot = document.getElementById('device-select');
+
+    if (deviceSelectRoot) {
+        const deviceInput = document.getElementById('device-search');
+        const deviceOptionsList = document.getElementById('device-options');
+        const deviceToggle = document.getElementById('device-select-toggle');
+        let devices = [];
+        let filteredDevices = [];
+
+        const normalizeDeviceItems = (value) => {
+            if (!Array.isArray(value)) return [];
+            return value
+                .map((item) => {
+                    if (typeof item === 'string') return item.trim();
+                    if (item && typeof item.name === 'string') return item.name.trim();
+                    return '';
+                })
+                .filter(Boolean);
+        };
+
+        const closeOptions = () => {
+            deviceOptionsList.hidden = true;
+            deviceInput.setAttribute('aria-expanded', 'false');
+        };
+
+        const openOptions = () => {
+            deviceOptionsList.hidden = false;
+            deviceInput.setAttribute('aria-expanded', 'true');
+        };
+
+        const renderOptions = (items) => {
+            deviceOptionsList.innerHTML = '';
+
+            if (!items.length) {
+                const empty = document.createElement('li');
+                empty.className = 'device-options-empty';
+                empty.textContent = 'Ничего не найдено';
+                deviceOptionsList.appendChild(empty);
+                return;
+            }
+
+            items.forEach((deviceName) => {
+                const li = document.createElement('li');
+                const button = document.createElement('button');
+
+                button.type = 'button';
+                button.className = 'device-option-button';
+                button.textContent = deviceName;
+                button.setAttribute('role', 'option');
+                button.addEventListener('click', () => {
+                    deviceInput.value = deviceName;
+                    closeOptions();
+                });
+
+                li.appendChild(button);
+                deviceOptionsList.appendChild(li);
+            });
+        };
+
+        const applyFilter = () => {
+            const query = deviceInput.value.trim().toLowerCase();
+            filteredDevices = !query
+                ? devices.slice()
+                : devices.filter((deviceName) => deviceName.toLowerCase().includes(query));
+            renderOptions(filteredDevices);
+            openOptions();
+        };
+
+        const loadDeviceConfig = async () => {
+            const configuredDevices = normalizeDeviceItems(
+                window.ISERVICE_CONFIG?.devices || window.DEVICE_OPTIONS
+            );
+
+            if (configuredDevices.length) return configuredDevices;
+
+            try {
+                const response = await fetch('config/devices.json', { cache: 'no-store' });
+                if (!response.ok) return [];
+                const payload = await response.json();
+                return normalizeDeviceItems(Array.isArray(payload) ? payload : payload.devices);
+            } catch (error) {
+                return [];
+            }
+        };
+
+        loadDeviceConfig().then((loadedDevices) => {
+            devices = loadedDevices;
+            filteredDevices = devices.slice();
+            renderOptions(filteredDevices);
+        });
+
+        deviceInput.addEventListener('focus', () => {
+            filteredDevices = devices.slice();
+            renderOptions(filteredDevices);
+            openOptions();
+        });
+
+        deviceInput.addEventListener('input', applyFilter);
+
+        deviceInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                closeOptions();
+            }
+
+            if (event.key === 'Enter' && !deviceOptionsList.hidden) {
+                event.preventDefault();
+                if (filteredDevices.length) {
+                    deviceInput.value = filteredDevices[0];
+                }
+                closeOptions();
+            }
+        });
+
+        deviceToggle.addEventListener('click', () => {
+            if (deviceOptionsList.hidden) {
+                filteredDevices = devices.slice();
+                renderOptions(filteredDevices);
+                openOptions();
+                deviceInput.focus();
+            } else {
+                closeOptions();
+            }
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!deviceSelectRoot.contains(event.target)) {
+                closeOptions();
+            }
+        });
+    }
+
 
     // ========== Mobile Navigation Toggle ==========
     const hamburger = document.getElementById('hamburger');

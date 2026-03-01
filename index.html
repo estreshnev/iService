@@ -99,6 +99,30 @@
                     <p class="hero-description">
                         Ремонт телефонов всех брендов, ноутбуков и любой техники от 15 минут или в день обращения. Профессиональное качество. Гарантия 90 дней.                    </p>
 
+                    <!-- Quick Price Check -->
+                    <div class="hero-price-check" id="hero-price-check">
+                        <p class="hero-price-title">Узнайте цену ремонта за 1 минуту</p>
+                        <div class="device-select" id="device-select">
+                            <div class="device-select-control">
+                                <i class="fas fa-mobile-alt device-select-icon" aria-hidden="true"></i>
+                                <input
+                                    type="text"
+                                    id="device-search"
+                                    class="device-search-input"
+                                    placeholder="Ваше устройство"
+                                    autocomplete="off"
+                                    role="combobox"
+                                    aria-expanded="false"
+                                    aria-controls="device-options"
+                                    aria-autocomplete="list">
+                                <button type="button" class="device-select-toggle" id="device-select-toggle" aria-label="Открыть список устройств">
+                                    <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <ul class="device-options" id="device-options" role="listbox" hidden></ul>
+                        </div>
+                    </div>
+
                     <!-- CTA -->
                     <div class="hero-cta">
                         <p class="hero-cta-label">Напишите нам — ответим за 5 минут</p>
