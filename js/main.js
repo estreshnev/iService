@@ -23,6 +23,24 @@ document.addEventListener('DOMContentLoaded', function() {
         window.addEventListener('resize', syncHeroPricePlacement);
     }
 
+    const heroBadge = document.getElementById('hero-badge-movable');
+    const heroBadgeDesktopSlot = document.getElementById('hero-badge-desktop-slot');
+    const heroBadgeMobileSlot = document.getElementById('hero-badge-mobile-slot');
+
+    if (heroBadge && heroBadgeDesktopSlot && heroBadgeMobileSlot) {
+        const syncHeroBadgePlacement = () => {
+            const isMobile = window.matchMedia('(max-width: 968px)').matches;
+            const targetSlot = isMobile ? heroBadgeMobileSlot : heroBadgeDesktopSlot;
+
+            if (heroBadge.parentElement !== targetSlot) {
+                targetSlot.appendChild(heroBadge);
+            }
+        };
+
+        syncHeroBadgePlacement();
+        window.addEventListener('resize', syncHeroBadgePlacement);
+    }
+
     // ========== Hero Device Select ==========
     const deviceSelectRoot = document.getElementById('device-select');
 
