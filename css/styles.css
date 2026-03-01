@@ -685,11 +685,31 @@ section {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
-    align-items: center;
+    align-items: stretch;
 }
 
 .hero-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     text-align: left;
+}
+
+.hero-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    min-height: 100%;
+    width: 100%;
+}
+
+#hero-price-check-desktop-slot {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.4rem 0;
 }
 
 .hero-badge {
@@ -745,11 +765,21 @@ section {
     padding: 1.05rem 1.05rem 1rem;
     border-radius: var(--radius-lg);
     border: 1px solid rgba(0, 177, 235, 0.35);
-    background: linear-gradient(135deg, rgba(0, 177, 235, 0.18) 0%, rgba(0, 177, 235, 0.05) 55%, rgba(255, 107, 53, 0.1) 100%);
+    background: linear-gradient(135deg, rgba(0, 177, 235, 0.18) 0%, rgba(0, 177, 235, 0.08) 55%, rgba(0, 142, 196, 0.1) 100%);
     box-shadow: 0 12px 34px rgba(0, 177, 235, 0.16), 0 2px 12px rgba(0, 0, 0, 0.05);
     position: relative;
     overflow: visible;
     z-index: 20;
+}
+
+.hero-price-check-right {
+    width: 100%;
+    max-width: none;
+    margin-top: 0;
+}
+
+#hero-price-check-mobile-slot {
+    display: none;
 }
 
 .hero-price-check::before {
@@ -954,17 +984,6 @@ section {
     color: var(--primary-color);
 }
 
-/* Hero Animation */
-.hero-animation {
-    width: 100%;
-    max-width: 700px;
-    height: auto;
-    min-height: 500px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 /* Responsive */
 @media (max-width: 968px) {
     .hero {
@@ -981,11 +1000,8 @@ section {
         order: 1;
     }
 
-    .hero-animation {
-        order: 2;
-        max-width: 400px;
-        min-height: 300px;
-        margin: 0 auto;
+    .hero-right {
+        display: none;
     }
 
     .hero-description {
@@ -997,6 +1013,10 @@ section {
     .hero-price-check {
         margin-left: auto;
         margin-right: auto;
+    }
+
+    #hero-price-check-mobile-slot {
+        display: block;
     }
 
     .hero-buttons {
@@ -1107,10 +1127,6 @@ section {
         height: 16px;
     }
 
-    .hero-animation {
-        max-width: 300px;
-        min-height: 250px;
-    }
 }
 
 @media (max-width: 420px) {

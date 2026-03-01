@@ -4,6 +4,25 @@
 
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
+    // ========== Hero Price Check Placement ==========
+    const heroPriceCheck = document.getElementById('hero-price-check');
+    const heroPriceDesktopSlot = document.getElementById('hero-price-check-desktop-slot');
+    const heroPriceMobileSlot = document.getElementById('hero-price-check-mobile-slot');
+
+    if (heroPriceCheck && heroPriceDesktopSlot && heroPriceMobileSlot) {
+        const syncHeroPricePlacement = () => {
+            const isMobile = window.matchMedia('(max-width: 968px)').matches;
+            const targetSlot = isMobile ? heroPriceMobileSlot : heroPriceDesktopSlot;
+
+            if (heroPriceCheck.parentElement !== targetSlot) {
+                targetSlot.appendChild(heroPriceCheck);
+            }
+        };
+
+        syncHeroPricePlacement();
+        window.addEventListener('resize', syncHeroPricePlacement);
+    }
+
     // ========== Hero Device Select ==========
     const deviceSelectRoot = document.getElementById('device-select');
 
