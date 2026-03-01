@@ -93,7 +93,6 @@
                     <p class="hero-description">
                         Ремонт телефонов всех брендов, ноутбуков и любой техники от 15 минут или в день обращения. Профессиональное качество. Гарантия 90 дней.                    </p>
 
-                    <div id="hero-badge-mobile-slot"></div>
                     <div id="hero-price-check-mobile-slot"></div>
 
                     <!-- CTA -->
@@ -130,20 +129,13 @@
                 </div>
 
                 <div class="hero-right">
-                    <div id="hero-badge-desktop-slot">
-                        <!-- Badge -->
-                        <div class="hero-badge" id="hero-badge-movable">
-                            <i class="fas fa-clock"></i>
-                            <span>Ремонт от 15 минут</span>
-                        </div>
-                    </div>
                     <div id="hero-price-check-desktop-slot">
                         <!-- Quick Price Check -->
                         <div class="hero-price-check hero-price-check-right" id="hero-price-check">
                             <p class="hero-price-title">Узнайте цену ремонта за 1 минуту</p>
-                            <div class="device-select" id="device-select">
-                                <div class="device-select-control">
-                                    <i class="fas fa-mobile-alt device-select-icon" aria-hidden="true"></i>
+                        <div class="device-select" id="device-select">
+                            <div class="device-select-control">
+                                <i class="fas fa-mobile-alt device-select-icon" aria-hidden="true"></i>
                                     <input
                                         type="text"
                                         id="device-search"
@@ -157,11 +149,14 @@
                                     <button type="button" class="device-select-toggle" id="device-select-toggle" aria-label="Открыть список устройств">
                                         <i class="fas fa-chevron-down" aria-hidden="true"></i>
                                     </button>
-                                </div>
-                                <ul class="device-options" id="device-options" role="listbox" hidden></ul>
                             </div>
+                            <ul class="device-options" id="device-options" role="listbox" hidden></ul>
                         </div>
+                        <button type="button" class="price-check-btn" id="price-check-btn">
+                            Узнать цену ремонта
+                        </button>
                     </div>
+                </div>
                 </div>
             </div>
         </div>
