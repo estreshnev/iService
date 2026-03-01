@@ -33,15 +33,56 @@ document.addEventListener('DOMContentLoaded', function() {
         let devices = [];
         let filteredDevices = [];
 
-        const normalizeDeviceItems = (value) => {
+        const normalizeDeviceEntries = (value, defaultGroup = '') => {
             if (!Array.isArray(value)) return [];
+
             return value
                 .map((item) => {
-                    if (typeof item === 'string') return item.trim();
-                    if (item && typeof item.name === 'string') return item.name.trim();
-                    return '';
+                    if (typeof item === 'string') {
+                        const name = item.trim();
+                        return name ? { name, group: defaultGroup } : null;
+                    }
+
+                    if (item && typeof item.name === 'string') {
+                        const name = item.name.trim();
+                        if (!name) return null;
+                        const group = typeof item.group === 'string' ? item.group.trim() : defaultGroup;
+                        return { name, group };
+                    }
+
+                    return null;
                 })
                 .filter(Boolean);
+        };
+
+        const normalizeGroupedDevices = (groups) => {
+            if (!Array.isArray(groups)) return [];
+
+            const entries = [];
+            groups.forEach((groupItem) => {
+                if (!groupItem || typeof groupItem !== 'object') return;
+                const groupTitle = typeof groupItem.title === 'string' ? groupItem.title.trim() : '';
+                entries.push(...normalizeDeviceEntries(groupItem.items, groupTitle));
+            });
+
+            return entries;
+        };
+
+        const uniqEntries = (entries) => {
+            const seen = new Set();
+            const result = [];
+
+            entries.forEach((entry) => {
+                const key = `${entry.group}::${entry.name}`.toLowerCase();
+                if (seen.has(key)) return;
+                seen.add(key);
+                result.push({
+                    ...entry,
+                    searchText: `${entry.name} ${entry.group}`.toLowerCase()
+                });
+            });
+
+            return result;
         };
 
         const closeOptions = () => {
@@ -65,37 +106,79 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            items.forEach((deviceName) => {
+            let currentGroup = null;
+
+            items.forEach((device) => {
+                if (!device || !device.name) return;
+                const groupName = device.group || 'Другое';
+
+                if (groupName !== currentGroup) {
+                    currentGroup = groupName;
+                    const groupLi = document.createElement('li');
+                    groupLi.className = 'device-group-title';
+                    groupLi.textContent = groupName;
+                    deviceOptionsList.appendChild(groupLi);
+                }
+
                 const li = document.createElement('li');
+                li.className = 'device-option-item';
                 const button = document.createElement('button');
+                const nameSpan = document.createElement('span');
+                const groupSpan = document.createElement('span');
 
                 button.type = 'button';
                 button.className = 'device-option-button';
-                button.textContent = deviceName;
+                nameSpan.className = 'device-option-label';
+                nameSpan.textContent = device.name;
+                groupSpan.className = 'device-option-group';
+                groupSpan.textContent = groupName;
                 button.setAttribute('role', 'option');
                 button.addEventListener('click', () => {
-                    deviceInput.value = deviceName;
+                    deviceInput.value = device.name;
                     closeOptions();
                 });
 
+                button.appendChild(nameSpan);
+                button.appendChild(groupSpan);
                 li.appendChild(button);
                 deviceOptionsList.appendChild(li);
             });
+
+            // Fallback guard: never leave dropdown visually empty when items exist.
+            if (!deviceOptionsList.children.length && items.length) {
+                items.forEach((device) => {
+                    if (!device || !device.name) return;
+                    const li = document.createElement('li');
+                    const button = document.createElement('button');
+                    button.type = 'button';
+                    button.className = 'device-option-button';
+                    button.textContent = device.name;
+                    button.addEventListener('click', () => {
+                        deviceInput.value = device.name;
+                        closeOptions();
+                    });
+                    li.appendChild(button);
+                    deviceOptionsList.appendChild(li);
+                });
+            }
         };
 
         const applyFilter = () => {
             const query = deviceInput.value.trim().toLowerCase();
             filteredDevices = !query
                 ? devices.slice()
-                : devices.filter((deviceName) => deviceName.toLowerCase().includes(query));
+                : devices.filter((device) => device.searchText.includes(query));
             renderOptions(filteredDevices);
             openOptions();
         };
 
         const loadDeviceConfig = async () => {
-            const configuredDevices = normalizeDeviceItems(
-                window.ISERVICE_CONFIG?.devices || window.DEVICE_OPTIONS
-            );
+            const configuredPayload = window.ISERVICE_CONFIG || {};
+            const configuredDevices = uniqEntries([
+                ...normalizeGroupedDevices(configuredPayload.groups),
+                ...normalizeDeviceEntries(configuredPayload.devices),
+                ...normalizeDeviceEntries(window.DEVICE_OPTIONS)
+            ]);
 
             if (configuredDevices.length) return configuredDevices;
 
@@ -103,7 +186,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 const response = await fetch('config/devices.json', { cache: 'no-store' });
                 if (!response.ok) return [];
                 const payload = await response.json();
-                return normalizeDeviceItems(Array.isArray(payload) ? payload : payload.devices);
+
+                if (Array.isArray(payload)) {
+                    return uniqEntries(normalizeDeviceEntries(payload));
+                }
+
+                return uniqEntries([
+                    ...normalizeGroupedDevices(payload.groups),
+                    ...normalizeDeviceEntries(payload.devices)
+                ]);
             } catch (error) {
                 return [];
             }
@@ -131,7 +222,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (event.key === 'Enter' && !deviceOptionsList.hidden) {
                 event.preventDefault();
                 if (filteredDevices.length) {
-                    deviceInput.value = filteredDevices[0];
+                    deviceInput.value = filteredDevices[0].name;
                 }
                 closeOptions();
             }
