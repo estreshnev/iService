@@ -119,6 +119,7 @@ a {
     text-decoration: none;
     color: inherit;
     transition: var(--transition-medium);
+    -webkit-tap-highlight-color: transparent;
 }
 
 img {
@@ -482,6 +483,7 @@ section {
     transition: var(--transition-premium);
     position: relative;
     overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .btn::before {
@@ -560,6 +562,15 @@ section {
     transition: all 0.3s ease;
     cursor: pointer;
     text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.btn:focus-visible,
+.btn-social:focus-visible {
+    outline: 2px solid rgba(0, 177, 235, 0.55);
+    outline-offset: 2px;
 }
 
 .btn-social > i {
@@ -895,22 +906,43 @@ section {
     }
 
     .hero-trust {
-        flex-direction: column;
-        gap: 0.5rem;
-        padding: 1rem;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        gap: 0.45rem;
+        padding: 0.65rem 0.8rem;
         width: 100%;
+        max-width: 360px;
         align-items: center;
-        font-size: 0.85rem;
+    }
+
+    .hero-trust-item {
+        flex: 1;
+        text-align: center;
+        font-size: 0.75rem;
+        line-height: 1.2;
     }
 
     .hero-trust-divider {
-        width: 40px;
-        height: 1px;
+        width: 1px;
+        height: 16px;
     }
 
     .hero-animation {
         max-width: 300px;
         min-height: 250px;
+    }
+}
+
+@media (max-width: 420px) {
+    .hero-trust {
+        gap: 0.35rem;
+        padding: 0.55rem 0.65rem;
+        max-width: 320px;
+    }
+
+    .hero-trust-item {
+        font-size: 0.68rem;
     }
 }
 
