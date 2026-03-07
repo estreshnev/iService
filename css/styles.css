@@ -1379,6 +1379,33 @@ section {
     background: var(--white);
     position: relative;
     display: block;
+    overflow: hidden;
+}
+
+.find-us::before {
+    content: '';
+    position: absolute;
+    top: -150px;
+    right: -150px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(0, 177, 235, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.find-us::after {
+    content: '';
+    position: absolute;
+    bottom: -150px;
+    left: -150px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255, 107, 53, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
 }
 
 .find-us-title {
@@ -1398,6 +1425,8 @@ section {
     gap: 0.68rem;
     width: 100%;
     align-items: stretch;
+    position: relative;
+    z-index: 1;
 }
 
 .find-us-card {
@@ -2115,6 +2144,10 @@ section {
 .footer-links,
 .footer-contacts {
     list-style: none;
+}
+
+.footer-links {
+    margin-top: 1rem;
 }
 
 .footer-links li,
