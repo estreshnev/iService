@@ -729,13 +729,13 @@ footer[id] {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
-    align-items: stretch;
+    align-items: start;
 }
 
 .hero-content {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     text-align: left;
 }
 
@@ -866,6 +866,105 @@ footer[id] {
 
 .price-check-btn:active {
     transform: translateY(0);
+}
+
+.price-check-result {
+    margin-top: 0.9rem;
+}
+
+.price-check-result-card {
+    border: 1px solid rgba(0, 177, 235, 0.18);
+    border-radius: var(--radius-lg);
+    background: rgba(247, 250, 252, 0.96);
+    padding: 0.9rem 0.95rem;
+}
+
+.price-check-result-label {
+    margin: 0 0 0.18rem;
+    font-size: 0.72rem;
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--text-light);
+}
+
+.price-check-result-title {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.2;
+    color: var(--text-dark);
+}
+
+.price-check-service-list {
+    list-style: none;
+    margin: 0.72rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.42rem;
+}
+
+.price-check-service-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding-top: 0.42rem;
+    border-top: 1px solid rgba(0, 177, 235, 0.12);
+}
+
+.price-check-service-name {
+    font-size: 0.9rem;
+    line-height: 1.35;
+    color: var(--text-body);
+}
+
+.price-check-service-price {
+    flex-shrink: 0;
+    font-size: 0.92rem;
+    line-height: 1.2;
+    font-weight: 700;
+    color: var(--primary-dark);
+}
+
+.price-check-request-link {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
+    padding: 0.5rem 0.78rem;
+    border-radius: var(--radius-full);
+    background: #26A5E4;
+    color: var(--white);
+    font-size: 0.84rem;
+    line-height: 1;
+    font-weight: 700;
+    white-space: nowrap;
+    box-shadow: 0 6px 14px rgba(38, 165, 228, 0.22);
+}
+
+.price-check-request-link:hover {
+    background: #1796d5;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(38, 165, 228, 0.3);
+}
+
+.price-check-empty {
+    margin: 0;
+    border: 1px solid rgba(0, 177, 235, 0.16);
+    border-radius: var(--radius-lg);
+    background: rgba(247, 250, 252, 0.96);
+    padding: 0.85rem 0.95rem;
+    font-size: 0.86rem;
+    line-height: 1.45;
+    color: var(--text-medium);
+}
+
+.price-check-empty code {
+    font-size: 0.83em;
+    color: var(--text-dark);
 }
 
 .device-select {
@@ -1179,6 +1278,22 @@ footer[id] {
     .price-check-btn {
         font-size: 0.9rem;
         padding: 0.72rem 0.9rem;
+    }
+
+    .price-check-result-card,
+    .price-check-empty {
+        padding: 0.8rem 0.84rem;
+    }
+
+    .price-check-service-name,
+    .price-check-service-price {
+        font-size: 0.86rem;
+    }
+
+    .price-check-request-link {
+        min-height: 32px;
+        padding: 0.46rem 0.7rem;
+        font-size: 0.8rem;
     }
 
     .hero-cta-label {
