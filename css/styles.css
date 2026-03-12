@@ -2492,10 +2492,7 @@ footer[id] {
 }
 
 .floating-buttons.is-hidden-by-keyboard {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transform: translateY(12px);
+    display: none;
 }
 
 .floating-buttons-title {
