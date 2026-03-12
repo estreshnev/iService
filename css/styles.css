@@ -2417,6 +2417,11 @@ footer[id] {
 
 /* ========== Responsive Design ========== */
 @media (max-width: 968px) {
+    section {
+        min-height: auto !important;
+        justify-content: flex-start;
+    }
+
     section:not(.hero):not(.why-choose):not(.find-us) {
         min-height: auto;
         padding: 3rem 0;
@@ -2434,7 +2439,7 @@ footer[id] {
     }
 
     .cta-section {
-        min-height: 80vh;
+        min-height: auto;
     }
 }
 
