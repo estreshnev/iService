@@ -30,43 +30,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const deviceInput = document.getElementById('device-search');
         const deviceOptionsList = document.getElementById('device-options');
         const deviceToggle = document.getElementById('device-select-toggle');
+        const priceCheckButton = document.getElementById('price-check-btn');
+        const priceCheckResult = document.getElementById('price-check-result');
         let devices = [];
         let filteredDevices = [];
-
-        const normalizeDeviceEntries = (value, defaultGroup = '') => {
-            if (!Array.isArray(value)) return [];
-
-            return value
-                .map((item) => {
-                    if (typeof item === 'string') {
-                        const name = item.trim();
-                        return name ? { name, group: defaultGroup } : null;
-                    }
-
-                    if (item && typeof item.name === 'string') {
-                        const name = item.name.trim();
-                        if (!name) return null;
-                        const group = typeof item.group === 'string' ? item.group.trim() : defaultGroup;
-                        return { name, group };
-                    }
-
-                    return null;
-                })
-                .filter(Boolean);
-        };
-
-        const normalizeGroupedDevices = (groups) => {
-            if (!Array.isArray(groups)) return [];
-
-            const entries = [];
-            groups.forEach((groupItem) => {
-                if (!groupItem || typeof groupItem !== 'object') return;
-                const groupTitle = typeof groupItem.title === 'string' ? groupItem.title.trim() : '';
-                entries.push(...normalizeDeviceEntries(groupItem.items, groupTitle));
-            });
-
-            return entries;
-        };
+        let priceEntries = [];
 
         const uniqEntries = (entries) => {
             const seen = new Set();
@@ -83,6 +51,214 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             return result;
+        };
+
+        const parseCsv = (text) => {
+            const rows = [];
+            let current = '';
+            let row = [];
+            let inQuotes = false;
+
+            for (let i = 0; i < text.length; i += 1) {
+                const char = text[i];
+                const nextChar = text[i + 1];
+
+                if (char === '"') {
+                    if (inQuotes && nextChar === '"') {
+                        current += '"';
+                        i += 1;
+                    } else {
+                        inQuotes = !inQuotes;
+                    }
+                    continue;
+                }
+
+                if (char === ',' && !inQuotes) {
+                    row.push(current);
+                    current = '';
+                    continue;
+                }
+
+                if ((char === '\n' || char === '\r') && !inQuotes) {
+                    if (char === '\r' && nextChar === '\n') {
+                        i += 1;
+                    }
+                    row.push(current);
+                    if (row.some(cell => cell !== '')) {
+                        rows.push(row);
+                    }
+                    row = [];
+                    current = '';
+                    continue;
+                }
+
+                current += char;
+            }
+
+            if (current !== '' || row.length) {
+                row.push(current);
+                if (row.some(cell => cell !== '')) {
+                    rows.push(row);
+                }
+            }
+
+            return rows;
+        };
+
+        const normalizePriceEntries = (rows) => {
+            if (!Array.isArray(rows) || rows.length < 2) return [];
+
+            const [header, ...dataRows] = rows;
+            const headerMap = header.reduce((acc, key, index) => {
+                acc[String(key || '').trim().toLowerCase()] = index;
+                return acc;
+            }, {});
+            let lastCategory = '';
+            let lastModel = '';
+
+            return dataRows
+                .map((row) => {
+                    const categoryCell = String(row[headerMap.category] || '').trim();
+                    const modelCell = String(row[headerMap.model] || '').trim();
+                    const service = String(row[headerMap.service] || '').trim();
+                    const price = String(row[headerMap.price] || '').trim();
+
+                    if (categoryCell) {
+                        lastCategory = categoryCell;
+                        if (!modelCell) {
+                            lastModel = '';
+                        }
+                    }
+
+                    if (modelCell) {
+                        lastModel = modelCell;
+                    }
+
+                    const category = categoryCell || lastCategory;
+                    const model = modelCell || lastModel;
+
+                    if (!category || !model || !service) return null;
+
+                    return {
+                        category,
+                        model,
+                        service,
+                        price,
+                        searchKey: model.toLowerCase()
+                    };
+                })
+                .filter(Boolean);
+        };
+
+        const buildDevicesFromPriceEntries = (entries) => uniqEntries(
+            entries.map((entry) => ({
+                name: entry.model,
+                group: entry.category
+            }))
+        );
+
+        const normalizeRuntimePriceEntries = (entries) => {
+            if (!Array.isArray(entries)) return [];
+
+            return entries
+                .map((entry) => {
+                    if (!entry || typeof entry !== 'object') return null;
+
+                    const category = String(entry.category || '').trim();
+                    const model = String(entry.model || '').trim();
+                    const service = String(entry.service || '').trim();
+                    const price = String(entry.price || '').trim();
+
+                    if (!category || !model || !service) return null;
+
+                    return {
+                        category,
+                        model,
+                        service,
+                        price,
+                        searchKey: model.toLowerCase()
+                    };
+                })
+                .filter(Boolean);
+        };
+
+        const escapeHtml = (value) => String(value)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+
+        const isPriceOnRequest = (price) => {
+            const normalizedPrice = String(price || '').trim().toLowerCase();
+            return (
+                normalizedPrice === '' ||
+                normalizedPrice === '-' ||
+                normalizedPrice === 'по запросу' ||
+                normalizedPrice === 'цена по запросу' ||
+                normalizedPrice === 'укажите цену'
+            );
+        };
+
+        const buildTelegramRequestUrl = (entry) => {
+            const message = [
+                'Здравствуйте! Хочу узнать цену ремонта.',
+                `Категория: ${entry.category}`,
+                `Модель: ${entry.model}`,
+                `Услуга: ${entry.service}`
+            ].join('\n');
+
+            return `https://t.me/perez_vol?text=${encodeURIComponent(message)}`;
+        };
+
+        const hidePriceResult = () => {
+            if (!priceCheckResult) return;
+            priceCheckResult.hidden = true;
+            priceCheckResult.innerHTML = '';
+        };
+
+        const renderPriceResult = (query) => {
+            if (!priceCheckResult) return;
+
+            const normalizedQuery = query.trim().toLowerCase();
+            const matches = priceEntries.filter((entry) => entry.searchKey === normalizedQuery);
+
+            if (!normalizedQuery) {
+                priceCheckResult.hidden = false;
+                priceCheckResult.innerHTML = '<p class="price-check-empty">Выберите устройство из списка, чтобы показать услуги и цены.</p>';
+                return;
+            }
+
+            if (!matches.length) {
+                priceCheckResult.hidden = false;
+                priceCheckResult.innerHTML = '<p class="price-check-empty">Для этой модели пока нет заполненных цен. Добавьте строки в <code>config/price-list.csv</code> или напишите нам.</p>';
+                return;
+            }
+
+            const { category, model } = matches[0];
+            const servicesMarkup = matches
+                .map((entry) => {
+                    const actionMarkup = isPriceOnRequest(entry.price)
+                        ? `<a class="price-check-request-link" href="${buildTelegramRequestUrl(entry)}" target="_blank" rel="noopener noreferrer">Цена по запросу</a>`
+                        : `<span class="price-check-service-price">${escapeHtml(entry.price)}</span>`;
+
+                    return `
+                        <li class="price-check-service-row">
+                            <span class="price-check-service-name">${escapeHtml(entry.service)}</span>
+                            ${actionMarkup}
+                        </li>
+                    `;
+                })
+                .join('');
+
+            priceCheckResult.hidden = false;
+            priceCheckResult.innerHTML = `
+                <div class="price-check-result-card">
+                    <p class="price-check-result-label">${escapeHtml(category)}</p>
+                    <h3 class="price-check-result-title">${escapeHtml(model)}</h3>
+                    <ul class="price-check-service-list">${servicesMarkup}</ul>
+                </div>
+            `;
         };
 
         const closeOptions = () => {
@@ -136,6 +312,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 button.addEventListener('click', () => {
                     deviceInput.value = device.name;
                     closeOptions();
+                    hidePriceResult();
                 });
 
                 button.appendChild(nameSpan);
@@ -156,6 +333,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     button.addEventListener('click', () => {
                         deviceInput.value = device.name;
                         closeOptions();
+                        hidePriceResult();
                     });
                     li.appendChild(button);
                     deviceOptionsList.appendChild(li);
@@ -173,31 +351,31 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         const loadDeviceConfig = async () => {
-            const configuredPayload = window.ISERVICE_CONFIG || {};
-            const configuredDevices = uniqEntries([
-                ...normalizeGroupedDevices(configuredPayload.groups),
-                ...normalizeDeviceEntries(configuredPayload.devices),
-                ...normalizeDeviceEntries(window.DEVICE_OPTIONS)
-            ]);
+            const runtimeEntries = normalizeRuntimePriceEntries(window.ISERVICE_PRICE_LIST);
+            const canFetchCsv = window.location.protocol !== 'file:';
 
-            if (configuredDevices.length) return configuredDevices;
-
-            try {
-                const response = await fetch('config/devices.json', { cache: 'no-store' });
-                if (!response.ok) return [];
-                const payload = await response.json();
-
-                if (Array.isArray(payload)) {
-                    return uniqEntries(normalizeDeviceEntries(payload));
+            if (canFetchCsv) {
+                try {
+                    const response = await fetch('config/price-list.csv', { cache: 'no-store' });
+                    if (response.ok) {
+                        const csvText = await response.text();
+                        const entries = normalizePriceEntries(parseCsv(csvText));
+                        if (entries.length) {
+                            priceEntries = entries;
+                            return buildDevicesFromPriceEntries(entries);
+                        }
+                    }
+                } catch (error) {
+                    // Fallback to generated runtime config below.
                 }
-
-                return uniqEntries([
-                    ...normalizeGroupedDevices(payload.groups),
-                    ...normalizeDeviceEntries(payload.devices)
-                ]);
-            } catch (error) {
-                return [];
             }
+
+            if (runtimeEntries.length) {
+                priceEntries = runtimeEntries;
+                return buildDevicesFromPriceEntries(runtimeEntries);
+            }
+
+            return [];
         };
 
         loadDeviceConfig().then((loadedDevices) => {
@@ -212,7 +390,10 @@ document.addEventListener('DOMContentLoaded', function() {
             openOptions();
         });
 
-        deviceInput.addEventListener('input', applyFilter);
+        deviceInput.addEventListener('input', () => {
+            hidePriceResult();
+            applyFilter();
+        });
 
         deviceInput.addEventListener('keydown', (event) => {
             if (event.key === 'Escape') {
@@ -225,6 +406,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     deviceInput.value = filteredDevices[0].name;
                 }
                 closeOptions();
+                hidePriceResult();
             }
         });
 
@@ -244,6 +426,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 closeOptions();
             }
         });
+
+        if (priceCheckButton) {
+            priceCheckButton.addEventListener('click', () => {
+                renderPriceResult(deviceInput.value || '');
+            });
+        }
     }
 
 
