@@ -1586,57 +1586,18 @@ footer[id] {
     }
 }
 
-/* ========== Reviews Section ========== */
-.reviews-section {
-    min-height: auto;
-    padding: var(--section-pad-desktop) 0;
-    background: var(--white);
+.find-us-reviews {
     position: relative;
-    overflow: hidden;
-}
-
-.reviews-section::before {
-    content: '';
-    position: absolute;
-    top: -140px;
-    left: -140px;
-    width: 420px;
-    height: 420px;
-    background: radial-gradient(circle, rgba(255, 107, 53, 0.08) 0%, transparent 72%);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 0;
-}
-
-.reviews-section::after {
-    content: '';
-    position: absolute;
-    bottom: -160px;
-    right: -140px;
-    width: 430px;
-    height: 430px;
-    background: radial-gradient(circle, rgba(0, 177, 235, 0.1) 0%, transparent 72%);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 0;
+    z-index: 1;
+    margin-top: var(--section-pad-desktop);
 }
 
 .reviews-title {
-    position: relative;
-    z-index: 1;
     margin: 0 0 var(--section-title-gap);
     font-size: var(--fs-title-section);
     line-height: var(--lh-tight);
     letter-spacing: var(--ls-tight);
     color: var(--text-dark);
-}
-
-.reviews-subtitle {
-    position: relative;
-    z-index: 1;
-    margin: 0 0 1.35rem;
-    color: var(--text-medium);
-    font-size: var(--fs-nav);
 }
 
 .reviews-track {
@@ -1722,8 +1683,8 @@ footer[id] {
 }
 
 @media (max-width: 968px) {
-    .reviews-section {
-        padding: var(--section-pad-tablet) 0;
+    .find-us-reviews {
+        margin-top: var(--section-pad-tablet);
     }
 
     .reviews-title {
@@ -1732,8 +1693,8 @@ footer[id] {
 }
 
 @media (max-width: 640px) {
-    .reviews-section {
-        padding: var(--section-pad-mobile) 0;
+    .find-us-reviews {
+        margin-top: var(--section-pad-mobile);
     }
 
     .reviews-track {
