@@ -342,19 +342,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // ========== Footer Fade In ==========
-        gsap.from('.footer', {
-            scrollTrigger: {
-                trigger: '.footer',
-                start: 'top 90%',
-                toggleActions: 'play none none reverse'
-            },
-            opacity: 0,
-            y: 50,
-            duration: 1,
-            ease: 'power3.out'
-        });
-
         // ========== Refresh ScrollTrigger on Load ==========
         window.addEventListener('load', function() {
             ScrollTrigger.refresh();
