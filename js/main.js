@@ -309,30 +309,6 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('scroll', throttle(handleScroll, 16));
     handleScroll();
 
-    // ========== Smooth Scroll for Anchor Links ==========
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-
-            if (href === '#') {
-                e.preventDefault();
-                return;
-            }
-
-            const target = document.querySelector(href);
-            if (target) {
-                e.preventDefault();
-                const navbarHeight = navbar ? navbar.offsetHeight : 0;
-                const targetPosition = target.offsetTop - navbarHeight;
-
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-
     // ========== CountUp Animation for Statistics ==========
     const countUpElements = document.querySelectorAll('.stat-number[data-count]');
 

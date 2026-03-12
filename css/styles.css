@@ -87,6 +87,22 @@
     --floating-shell-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
     --floating-btn-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     --floating-btn-shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.2);
+
+    /* Active Page Type Scale */
+    --fs-nav: 0.95rem;
+    --fs-body: 1rem;
+    --fs-body-lg: 1.125rem;
+    --fs-body-sm: 0.9rem;
+    --fs-label: 0.74rem;
+    --fs-title-section: clamp(1.55rem, 2.6vw, 2.15rem);
+    --fs-title-card: 1.08rem;
+    --fs-title-footer: 1.3rem;
+    --lh-tight: 1.18;
+    --lh-title: 1.22;
+    --lh-body: 1.7;
+    --lh-body-compact: 1.46;
+    --ls-tight: -0.015em;
+    --ls-title: -0.005em;
 }
 
 /* ========== Global Reset & Base Styles ========== */
@@ -170,6 +186,12 @@ section {
     position: relative;
 }
 
+/* Keep anchor targets visible below fixed header */
+section[id],
+footer[id] {
+    scroll-margin-top: calc(var(--navbar-offset) + 12px);
+}
+
 /* ========== Navigation ========== */
 .navbar {
     position: fixed;
@@ -235,7 +257,7 @@ section {
 .nav-link {
     font-family: var(--font-primary);
     font-weight: 500;
-    font-size: 0.95rem;
+    font-size: var(--fs-nav);
     color: var(--text-dark);
     position: relative;
     padding: 0.5rem 0;
@@ -270,7 +292,7 @@ section {
 .nav-phone {
     font-family: var(--font-primary);
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: var(--fs-nav);
     color: var(--primary-color);
     white-space: nowrap;
 }
@@ -356,7 +378,7 @@ section {
 
 @media (max-width: 768px) {
     .logo-text {
-        font-size: 1.15rem;
+        font-size: 1.1rem;
     }
 
     .navbar .mobile-top-phone {
@@ -447,7 +469,7 @@ section {
 
 .location-address {
     font-family: var(--font-primary);
-    font-size: 0.95rem;
+    font-size: var(--fs-nav);
     font-weight: 500;
     color: var(--text-dark);
     line-height: 1.4;
@@ -477,7 +499,7 @@ section {
     }
 
     .location-address {
-        font-size: 0.85rem;
+        font-size: 0.86rem;
         text-align: center;
         word-wrap: break-word;
         overflow-wrap: break-word;
@@ -552,7 +574,7 @@ section {
 }
 
 .hero-cta-label {
-    font-size: 0.95rem;
+    font-size: var(--fs-nav);
     color: var(--text-medium);
     margin-bottom: 0.75rem;
     font-weight: 500;
@@ -747,15 +769,15 @@ section {
 }
 
 .hero-description {
-    font-size: 1.125rem;
-    line-height: 1.7;
+    font-size: var(--fs-body-lg);
+    line-height: var(--lh-body);
     color: var(--text-body);
     margin-bottom: 0.75rem;
     max-width: 540px;
 }
 
 .hero-description-sub {
-    font-size: 0.95rem;
+    font-size: var(--fs-nav);
     line-height: 1.6;
     color: var(--text-medium);
     margin-bottom: 2rem;
@@ -1075,7 +1097,7 @@ section {
     .hero-description {
         margin-left: auto;
         margin-right: auto;
-        font-size: 1rem;
+        font-size: var(--fs-body);
     }
 
     .hero-price-check {
@@ -1114,7 +1136,7 @@ section {
     }
 
     .hero-description {
-        font-size: 0.95rem;
+        font-size: 0.98rem;
         margin-bottom: 1.5rem;
     }
 
@@ -1132,7 +1154,7 @@ section {
     }
 
     .hero-price-title {
-        font-size: 0.88rem;
+        font-size: 0.9rem;
         margin-bottom: 0.55rem;
     }
 
@@ -1142,11 +1164,11 @@ section {
     }
 
     .device-search-input {
-        font-size: 0.88rem;
+        font-size: 0.9rem;
     }
 
     .device-option-button {
-        font-size: 0.86rem;
+        font-size: 0.88rem;
     }
 
     .device-option-group {
@@ -1155,12 +1177,12 @@ section {
     }
 
     .price-check-btn {
-        font-size: 0.88rem;
+        font-size: 0.9rem;
         padding: 0.72rem 0.9rem;
     }
 
     .hero-cta-label {
-        font-size: 0.85rem;
+        font-size: 0.88rem;
     }
 
     .hero-buttons {
@@ -1176,7 +1198,7 @@ section {
     }
 
     .hero-buttons .btn-social-name {
-        font-size: 0.85rem;
+        font-size: 0.88rem;
     }
 
     .hero-trust {
@@ -1254,10 +1276,10 @@ section {
     position: relative;
     z-index: 1;
     margin: 0 0 var(--section-title-gap);
-    font-size: clamp(1.55rem, 2.6vw, 2.15rem);
-    line-height: 1.18;
+    font-size: var(--fs-title-section);
+    line-height: var(--lh-tight);
     text-align: left;
-    letter-spacing: -0.015em;
+    letter-spacing: var(--ls-tight);
     white-space: nowrap;
 }
 
@@ -1314,9 +1336,9 @@ section {
 
 .why-info-card h3 {
     margin: 0;
-    font-size: 1.08rem;
-    line-height: 1.22;
-    letter-spacing: -0.005em;
+    font-size: var(--fs-title-card);
+    line-height: var(--lh-title);
+    letter-spacing: var(--ls-title);
     color: var(--text-dark);
     font-weight: 700;
 }
@@ -1324,8 +1346,8 @@ section {
 .why-info-card p {
     margin: 0;
     padding-top: 0.48rem;
-    font-size: 0.9rem;
-    line-height: 1.46;
+    font-size: var(--fs-body-sm);
+    line-height: var(--lh-body-compact);
     color: var(--text-medium);
 }
 
@@ -1391,12 +1413,12 @@ section {
     }
 
     .why-info-card h3 {
-        font-size: 1rem;
+        font-size: 1.02rem;
     }
 
     .why-info-card p {
         padding-top: 0.36rem;
-        font-size: 0.86rem;
+        font-size: 0.88rem;
         line-height: 1.42;
     }
 
@@ -1462,7 +1484,7 @@ section {
     padding: 0.82rem var(--surface-pad-x);
     border-bottom: 1px solid var(--surface-divider);
     color: var(--text-dark);
-    font-size: 0.95rem;
+    font-size: var(--fs-nav);
     font-weight: 600;
     line-height: 1.35;
 }
@@ -1487,7 +1509,7 @@ section {
 
 .find-us-phones-title {
     margin: 0 0 0.06rem;
-    font-size: 0.74rem;
+    font-size: var(--fs-label);
     line-height: 1.2;
     color: var(--text-light);
     font-weight: 700;
@@ -1497,7 +1519,7 @@ section {
 
 .find-us-phones a {
     color: var(--primary-dark);
-    font-size: 0.9rem;
+    font-size: var(--fs-body-sm);
     font-weight: 700;
     line-height: 1.25;
 }
@@ -1540,7 +1562,7 @@ section {
     }
 
     .find-us-address {
-        font-size: 0.88rem;
+        font-size: 0.9rem;
         padding: 0.72rem 0.78rem;
         margin: 0;
     }
@@ -1556,7 +1578,7 @@ section {
     }
 
     .find-us-phones a {
-        font-size: 0.84rem;
+        font-size: 0.88rem;
     }
 
     .find-us-map-wrap iframe {
@@ -2061,7 +2083,7 @@ section {
 
 .footer-description {
     color: var(--footer-text);
-    line-height: 1.7;
+    line-height: var(--lh-body);
     margin-bottom: 1.5rem;
 }
 
@@ -2091,7 +2113,7 @@ section {
 }
 
 .footer-title {
-    font-size: 1.3rem;
+    font-size: var(--fs-title-footer);
     margin-bottom: 1.5rem;
     color: var(--white);
 }
@@ -2139,7 +2161,7 @@ section {
     padding-top: 2rem;
     text-align: center;
     color: var(--footer-text-muted);
-    font-size: 0.9rem;
+    font-size: var(--fs-body-sm);
 }
 
 /* ========== Responsive Design ========== */
@@ -2216,7 +2238,7 @@ section {
     right: 0.45rem;
     top: -1.35rem;
     margin: 0;
-    font-size: 1.04rem;
+    font-size: 1rem;
     line-height: 1.2;
     font-weight: 700;
     color: #0f2f45;
@@ -2295,7 +2317,7 @@ section {
         left: 0.38rem;
         right: 0.38rem;
         top: -1.1rem;
-        font-size: 0.94rem;
+        font-size: 0.96rem;
         padding: 0;
     }
 
