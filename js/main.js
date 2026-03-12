@@ -267,37 +267,53 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // ========== Navbar Scroll Effect ==========
+    // ========== Scroll UI State ==========
     const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', function() {
-        if (!navbar) return;
-        const currentScroll = window.pageYOffset;
-
-        if (currentScroll > 100) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
+    const scrollProgress = document.getElementById('scroll-progress');
+    const sections = document.querySelectorAll('section[id], footer[id]');
+    const sectionNavLinks = Array.from(navLinks).filter(link => {
+        const href = link.getAttribute('href') || '';
+        return href.startsWith('#');
     });
 
-    // ========== Scroll Progress Bar ==========
-    const scrollProgress = document.getElementById('scroll-progress');
-
-    window.addEventListener('scroll', function() {
+    const handleScroll = () => {
         const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
         const scrolled = (window.pageYOffset / windowHeight);
+        const currentScroll = window.pageYOffset;
+
+        if (navbar) {
+            navbar.classList.toggle('scrolled', currentScroll > 100);
+        }
 
         if (scrollProgress) {
             scrollProgress.style.transform = `scaleX(${scrolled})`;
         }
-    });
+
+        if (sectionNavLinks.length === 0) return;
+
+        sections.forEach(section => {
+            const sectionHeight = section.offsetHeight;
+            const sectionTop = section.offsetTop - 100;
+            const sectionId = section.getAttribute('id');
+            const navLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
+
+            if (currentScroll > sectionTop && currentScroll <= sectionTop + sectionHeight) {
+                navLinks.forEach(link => link.classList.remove('active'));
+                if (navLink) {
+                    navLink.classList.add('active');
+                }
+            }
+        });
+    };
+
+    window.addEventListener('scroll', throttle(handleScroll, 16));
+    handleScroll();
 
     // ========== Smooth Scroll for Anchor Links ==========
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
 
-            // Skip if href is just "#"
             if (href === '#') {
                 e.preventDefault();
                 return;
@@ -306,7 +322,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const target = document.querySelector(href);
             if (target) {
                 e.preventDefault();
-                const navbarHeight = navbar.offsetHeight;
+                const navbarHeight = navbar ? navbar.offsetHeight : 0;
                 const targetPosition = target.offsetTop - navbarHeight;
 
                 window.scrollTo({
@@ -322,8 +338,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function animateCountUp(element) {
         const target = parseInt(element.getAttribute('data-count'));
-        const duration = 2000; // 2 seconds
-        const increment = target / (duration / 16); // 60fps
+        const duration = 2000;
+        const increment = target / (duration / 16);
         let current = 0;
 
         const timer = setInterval(() => {
@@ -338,51 +354,22 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function formatNumber(num) {
-        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
     }
 
-    // Intersection Observer for count-up animation
-    const countUpObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting && entry.target.textContent === '0') {
-                animateCountUp(entry.target);
-            }
-        });
-    }, { threshold: 0.5 });
-
-    countUpElements.forEach(element => {
-        countUpObserver.observe(element);
-    });
-
-    // ========== Active Navigation Link on Scroll ==========
-    const sections = document.querySelectorAll('section[id]');
-    const sectionNavLinks = Array.from(navLinks).filter(link => {
-        const href = link.getAttribute('href') || '';
-        return href.startsWith('#');
-    });
-
-    function setActiveNavLink() {
-        // Scroll spy is only relevant for one-page navigation with hash links.
-        if (sectionNavLinks.length === 0) return;
-
-        const scrollY = window.pageYOffset;
-
-        sections.forEach(section => {
-            const sectionHeight = section.offsetHeight;
-            const sectionTop = section.offsetTop - 100;
-            const sectionId = section.getAttribute('id');
-            const navLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
-
-            if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-                navLinks.forEach(link => link.classList.remove('active'));
-                if (navLink) {
-                    navLink.classList.add('active');
+    if (countUpElements.length) {
+        const countUpObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && entry.target.textContent === '0') {
+                    animateCountUp(entry.target);
                 }
-            }
+            });
+        }, { threshold: 0.5 });
+
+        countUpElements.forEach(element => {
+            countUpObserver.observe(element);
         });
     }
-
-    window.addEventListener('scroll', setActiveNavLink);
 
     // ========== Back to Top Button (Optional) ==========
     const createBackToTop = () => {
@@ -441,9 +428,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return re.test(phone);
     };
 
-    // ========== Console Log ==========
-    console.log('%c🚀 iService35.ru Premium Website', 'color: #1a5490; font-size: 20px; font-weight: bold;');
-    console.log('%cBuilt with Claude Code', 'color: #d4af37; font-size: 14px;');
 });
 
 // ========== Page Load Animation ==========
