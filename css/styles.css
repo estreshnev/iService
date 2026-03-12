@@ -1205,6 +1205,14 @@ footer[id] {
     .hero-price-check {
         margin-left: auto;
         margin-right: auto;
+        text-align: left;
+    }
+
+    .price-check-result,
+    .price-check-result-card,
+    .price-check-service-name,
+    .price-check-empty {
+        text-align: left;
     }
 
     #hero-price-check-mobile-slot {
