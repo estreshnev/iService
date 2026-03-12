@@ -238,9 +238,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const { category, model } = matches[0];
             const servicesMarkup = matches
                 .map((entry) => {
-                    const actionMarkup = isPriceOnRequest(entry.price)
-                        ? `<a class="price-check-request-link" href="${buildTelegramRequestUrl(entry)}" target="_blank" rel="noopener noreferrer">Цена по запросу</a>`
-                        : `<span class="price-check-service-price">${escapeHtml(entry.price)}</span>`;
+                    const actionText = isPriceOnRequest(entry.price)
+                        ? 'Цена по запросу'
+                        : escapeHtml(entry.price);
+                    const actionMarkup = `
+                        <a class="price-check-service-link" href="${buildTelegramRequestUrl(entry)}" target="_blank" rel="noopener noreferrer">
+                            <span class="price-check-service-link-main">${actionText}</span>
+                            <span class="price-check-service-link-cta"><i class="fas fa-chevron-right" aria-hidden="true"></i></span>
+                        </a>
+                    `;
 
                     return `
                         <li class="price-check-service-row">

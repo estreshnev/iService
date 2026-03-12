@@ -920,35 +920,38 @@ footer[id] {
     color: var(--text-body);
 }
 
-.price-check-service-price {
-    flex-shrink: 0;
-    font-size: 0.92rem;
-    line-height: 1.2;
-    font-weight: 700;
-    color: var(--primary-dark);
-}
-
-.price-check-request-link {
+.price-check-service-link {
     flex-shrink: 0;
     display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 34px;
-    padding: 0.5rem 0.78rem;
-    border-radius: var(--radius-full);
-    background: #26A5E4;
-    color: var(--white);
-    font-size: 0.84rem;
-    line-height: 1;
-    font-weight: 700;
+    align-items: baseline;
+    gap: 0.35rem;
+    font-size: 0.89rem;
+    line-height: 1.2;
+    color: var(--primary-dark);
     white-space: nowrap;
-    box-shadow: 0 6px 14px rgba(38, 165, 228, 0.22);
 }
 
-.price-check-request-link:hover {
-    background: #1796d5;
-    transform: translateY(-1px);
-    box-shadow: 0 8px 18px rgba(38, 165, 228, 0.3);
+.price-check-service-link-main {
+    font-weight: 700;
+}
+
+.price-check-service-link-cta {
+    font-size: 0.89rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    opacity: 1;
+}
+
+.price-check-service-link-cta i {
+    font-size: 0.8em;
+}
+
+.price-check-service-link:hover {
+    color: var(--primary-color);
+}
+
+.price-check-service-link:hover .price-check-service-link-cta {
+    text-decoration: none;
 }
 
 .price-check-empty {
@@ -1286,14 +1289,12 @@ footer[id] {
     }
 
     .price-check-service-name,
-    .price-check-service-price {
+    .price-check-service-link {
         font-size: 0.86rem;
     }
 
-    .price-check-request-link {
-        min-height: 32px;
-        padding: 0.46rem 0.7rem;
-        font-size: 0.8rem;
+    .price-check-service-link-cta {
+        font-size: 0.86rem;
     }
 
     .hero-cta-label {
