@@ -452,6 +452,26 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // ========== Hide Floating Buttons When Mobile Keyboard Is Open ==========
+    const floatingButtons = document.querySelector('.floating-buttons');
+
+    if (floatingButtons && window.visualViewport) {
+        const syncFloatingButtonsVisibility = () => {
+            const isMobileViewport = window.matchMedia('(max-width: 968px)').matches;
+            const keyboardOpened = (window.innerHeight - window.visualViewport.height) > 160;
+
+            floatingButtons.classList.toggle(
+                'is-hidden-by-keyboard',
+                isMobileViewport && keyboardOpened
+            );
+        };
+
+        window.visualViewport.addEventListener('resize', syncFloatingButtonsVisibility);
+        window.visualViewport.addEventListener('scroll', syncFloatingButtonsVisibility);
+        window.addEventListener('resize', syncFloatingButtonsVisibility);
+        syncFloatingButtonsVisibility();
+    }
+
 
     // ========== Mobile Navigation Toggle ==========
     const hamburger = document.getElementById('hamburger');
