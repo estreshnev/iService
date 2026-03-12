@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const deviceInput = document.getElementById('device-search');
         const deviceOptionsList = document.getElementById('device-options');
         const deviceToggle = document.getElementById('device-select-toggle');
+        const deviceControl = deviceSelectRoot.querySelector('.device-select-control');
         const priceCheckButton = document.getElementById('price-check-btn');
         const priceCheckResult = document.getElementById('price-check-result');
         let devices = [];
@@ -426,6 +427,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 closeOptions();
             }
         });
+
+        if (deviceControl) {
+            deviceControl.addEventListener('click', (event) => {
+                if (deviceToggle.contains(event.target)) return;
+
+                filteredDevices = devices.slice();
+                renderOptions(filteredDevices);
+                openOptions();
+                deviceInput.focus();
+            });
+        }
 
         document.addEventListener('click', (event) => {
             if (!deviceSelectRoot.contains(event.target)) {

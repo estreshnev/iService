@@ -978,6 +978,7 @@ footer[id] {
     display: flex;
     align-items: center;
     gap: 0.55rem;
+    cursor: text;
     border: 1px solid rgba(26, 84, 144, 0.24);
     background: var(--white);
     border-radius: var(--radius-full);
