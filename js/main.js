@@ -455,20 +455,36 @@ document.addEventListener('DOMContentLoaded', function() {
     // ========== Hide Floating Buttons When Mobile Keyboard Is Open ==========
     const floatingButtons = document.querySelector('.floating-buttons');
 
-    if (floatingButtons && window.visualViewport) {
+    if (floatingButtons) {
+        const isEditableField = (element) => {
+            if (!element) return false;
+
+            return element.matches('input, textarea, select, [contenteditable="true"]');
+        };
+
         const syncFloatingButtonsVisibility = () => {
             const isMobileViewport = window.matchMedia('(max-width: 968px)').matches;
-            const keyboardOpened = (window.innerHeight - window.visualViewport.height) > 160;
+            const viewportKeyboardOpened = window.visualViewport
+                ? (window.innerHeight - window.visualViewport.height) > 120
+                : false;
+            const focusedEditable = isEditableField(document.activeElement);
 
             floatingButtons.classList.toggle(
                 'is-hidden-by-keyboard',
-                isMobileViewport && keyboardOpened
+                isMobileViewport && (viewportKeyboardOpened || focusedEditable)
             );
         };
 
-        window.visualViewport.addEventListener('resize', syncFloatingButtonsVisibility);
-        window.visualViewport.addEventListener('scroll', syncFloatingButtonsVisibility);
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', syncFloatingButtonsVisibility);
+            window.visualViewport.addEventListener('scroll', syncFloatingButtonsVisibility);
+        }
+
         window.addEventListener('resize', syncFloatingButtonsVisibility);
+        document.addEventListener('focusin', syncFloatingButtonsVisibility);
+        document.addEventListener('focusout', () => {
+            window.setTimeout(syncFloatingButtonsVisibility, 80);
+        });
         syncFloatingButtonsVisibility();
     }
 
