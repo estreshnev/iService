@@ -221,15 +221,8 @@ document.addEventListener('DOMContentLoaded', function() {
             );
         };
 
-        const buildTelegramRequestUrl = (entry) => {
-            const message = [
-                'Здравствуйте! Хочу узнать цену ремонта.',
-                `Категория: ${entry.category}`,
-                `Модель: ${entry.model}`,
-                `Услуга: ${entry.service}`
-            ].join('\n');
-
-            return `https://t.me/perez_vol?text=${encodeURIComponent(message)}`;
+        const buildPriceRequestUrl = () => {
+            return 'https://vk.com/i_service';
         };
 
         const hidePriceResult = () => {
@@ -263,7 +256,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         ? 'Цена по запросу'
                         : escapeHtml(entry.price);
                     const actionMarkup = `
-                        <a class="price-check-service-link" href="${buildTelegramRequestUrl(entry)}" target="_blank" rel="noopener noreferrer">
+                        <a class="price-check-service-link" href="${buildPriceRequestUrl()}" target="_blank" rel="noopener noreferrer">
                             <span class="price-check-service-link-main">${actionText}</span>
                             <span class="price-check-service-link-cta"><i class="fas fa-chevron-right" aria-hidden="true"></i></span>
                         </a>
