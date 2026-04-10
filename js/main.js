@@ -37,6 +37,26 @@ document.addEventListener('DOMContentLoaded', function() {
         let filteredDevices = [];
         let priceEntries = [];
 
+        const scrollPriceCheckIntoView = () => {
+            if (!heroPriceCheck || !window.matchMedia('(max-width: 968px)').matches) return;
+
+            const navbar = document.getElementById('navbar');
+            const navbarOffset = navbar ? navbar.offsetHeight : 0;
+            const targetTop = heroPriceCheck.getBoundingClientRect().top + window.scrollY - navbarOffset - 12;
+
+            window.scrollTo({
+                top: Math.max(0, targetTop),
+                behavior: 'smooth'
+            });
+        };
+
+        const focusSelectedDeviceState = () => {
+            if (!window.matchMedia('(max-width: 968px)').matches) return;
+
+            deviceInput.blur();
+            window.setTimeout(scrollPriceCheckIntoView, 220);
+        };
+
         const uniqEntries = (entries) => {
             const seen = new Set();
             const result = [];
@@ -320,6 +340,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     deviceInput.value = device.name;
                     closeOptions();
                     hidePriceResult();
+                    focusSelectedDeviceState();
                 });
 
                 button.appendChild(nameSpan);
@@ -341,6 +362,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         deviceInput.value = device.name;
                         closeOptions();
                         hidePriceResult();
+                        focusSelectedDeviceState();
                     });
                     li.appendChild(button);
                     deviceOptionsList.appendChild(li);
@@ -414,6 +436,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 closeOptions();
                 hidePriceResult();
+                focusSelectedDeviceState();
             }
         });
 
@@ -464,14 +487,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const syncFloatingButtonsVisibility = () => {
             const isMobileViewport = window.matchMedia('(max-width: 968px)').matches;
-            const viewportKeyboardOpened = window.visualViewport
+            const hasVisualViewport = Boolean(window.visualViewport);
+            const viewportKeyboardOpened = hasVisualViewport
                 ? (window.innerHeight - window.visualViewport.height) > 120
                 : false;
             const focusedEditable = isEditableField(document.activeElement);
+            const shouldHideButtons = hasVisualViewport
+                ? viewportKeyboardOpened
+                : focusedEditable;
 
             floatingButtons.classList.toggle(
                 'is-hidden-by-keyboard',
-                isMobileViewport && (viewportKeyboardOpened || focusedEditable)
+                isMobileViewport && shouldHideButtons
             );
         };
 
@@ -481,9 +508,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         window.addEventListener('resize', syncFloatingButtonsVisibility);
+        window.addEventListener('orientationchange', syncFloatingButtonsVisibility);
+        document.addEventListener('visibilitychange', syncFloatingButtonsVisibility);
         document.addEventListener('focusin', syncFloatingButtonsVisibility);
         document.addEventListener('focusout', () => {
             window.setTimeout(syncFloatingButtonsVisibility, 80);
+            window.setTimeout(syncFloatingButtonsVisibility, 260);
         });
         syncFloatingButtonsVisibility();
     }
