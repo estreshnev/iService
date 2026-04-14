@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://iservice35.ru/sitemap.xml

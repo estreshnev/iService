@@ -294,17 +294,22 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // ========== CTA Section Scale Animation ==========
-        gsap.from('.cta-content', {
-            scrollTrigger: {
-                trigger: '.cta-section',
-                start: 'top 70%',
-                toggleActions: 'play none none reverse'
-            },
-            scale: 0.9,
-            opacity: 0,
-            duration: 1,
-            ease: 'back.out(1.7)'
-        });
+        const ctaContent = document.querySelector('.cta-content');
+        const ctaSection = document.querySelector('.cta-section');
+
+        if (ctaContent && ctaSection) {
+            gsap.from(ctaContent, {
+                scrollTrigger: {
+                    trigger: ctaSection,
+                    start: 'top 70%',
+                    toggleActions: 'play none none reverse'
+                },
+                scale: 0.9,
+                opacity: 0,
+                duration: 1,
+                ease: 'back.out(1.7)'
+            });
+        }
 
         // ========== Button Ripple Effect ==========
         const buttons = document.querySelectorAll('.btn');
@@ -418,6 +423,4 @@ document.addEventListener('DOMContentLoaded', function() {
     // if (window.innerWidth > 1024) {
     //     createCustomCursor();
     // }
-
-    console.log('%c✨ Animations initialized!', 'color: #d4af37; font-size: 14px;');
 });

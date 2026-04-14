@@ -203,6 +203,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 .filter(Boolean);
         };
 
+        const loadRuntimePriceEntries = () => {
+            const currentEntries = normalizeRuntimePriceEntries(window.ISERVICE_PRICE_LIST);
+            if (currentEntries.length) {
+                return Promise.resolve(currentEntries);
+            }
+
+            return new Promise((resolve) => {
+                const script = document.createElement('script');
+                script.src = 'config/price-list.js';
+                script.onload = () => resolve(normalizeRuntimePriceEntries(window.ISERVICE_PRICE_LIST));
+                script.onerror = () => resolve([]);
+                document.head.appendChild(script);
+            });
+        };
+
         const escapeHtml = (value) => String(value)
             .replace(/&/g, '&amp;')
             .replace(/</g, '&lt;')
@@ -383,7 +398,6 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         const loadDeviceConfig = async () => {
-            const runtimeEntries = normalizeRuntimePriceEntries(window.ISERVICE_PRICE_LIST);
             const canFetchCsv = window.location.protocol !== 'file:';
 
             if (canFetchCsv) {
@@ -401,6 +415,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Fallback to generated runtime config below.
                 }
             }
+
+            const runtimeEntries = await loadRuntimePriceEntries();
 
             if (runtimeEntries.length) {
                 priceEntries = runtimeEntries;
