@@ -691,12 +691,13 @@ footer[id] {
 /* ========== Hero Section - Clean & Minimal ========== */
 .hero {
     background: var(--white);
-    overflow: hidden;
+    overflow: visible;
     padding-top: 3.5rem; /* Extra-large gap below locations bar */
     padding-bottom: 3.5rem;
     min-height: auto;
     justify-content: flex-start; /* Disable vertical centering for this section */
     position: relative;
+    z-index: 2;
 }
 
 .hero::before {
@@ -730,6 +731,8 @@ footer[id] {
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
     align-items: start;
+    position: relative;
+    z-index: 30;
 }
 
 .hero-content {
