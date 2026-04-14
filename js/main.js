@@ -225,6 +225,16 @@ document.addEventListener('DOMContentLoaded', function() {
             return 'https://vk.com/i_service';
         };
 
+        const buildUnknownDeviceMessage = (query) => {
+            const deviceName = query ? ` по запросу «${escapeHtml(query)}»` : '';
+
+            return `
+                <p class="price-check-empty-title">Не нашли устройство${deviceName}</p>
+                <p class="price-check-empty-text">Это не значит, что мы не сможем помочь. Напишите нам, проверим возможность ремонта и сориентируем по цене.</p>
+                <a class="price-check-empty-link" href="${buildPriceRequestUrl()}" target="_blank" rel="noopener noreferrer">Узнать цену ремонта</a>
+            `;
+        };
+
         const hidePriceResult = () => {
             if (!priceCheckResult) return;
             priceCheckResult.hidden = true;
@@ -245,7 +255,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (!matches.length) {
                 priceCheckResult.hidden = false;
-                priceCheckResult.innerHTML = '<p class="price-check-empty">Для этой модели пока нет заполненных цен. Добавьте строки в <code>config/price-list.csv</code> или напишите нам.</p>';
+                priceCheckResult.innerHTML = `<div class="price-check-empty price-check-empty-action">${buildUnknownDeviceMessage(query.trim())}</div>`;
                 return;
             }
 
@@ -291,13 +301,13 @@ document.addEventListener('DOMContentLoaded', function() {
             deviceInput.setAttribute('aria-expanded', 'true');
         };
 
-        const renderOptions = (items) => {
+        const renderOptions = (items, query = deviceInput.value.trim()) => {
             deviceOptionsList.innerHTML = '';
 
             if (!items.length) {
                 const empty = document.createElement('li');
-                empty.className = 'device-options-empty';
-                empty.textContent = 'Ничего не найдено';
+                empty.className = 'device-options-empty device-options-empty-action';
+                empty.innerHTML = buildUnknownDeviceMessage(query);
                 deviceOptionsList.appendChild(empty);
                 return;
             }
