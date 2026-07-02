@@ -14,12 +14,12 @@
 ## 3. Styling and Responsiveness
 
 - [x] 3.1 Add CSS using existing variables, spacing patterns, card styling, and responsive breakpoints.
-- [ ] 3.2 Ensure the section is readable and non-overlapping on mobile, tablet, and desktop widths.
+- [x] 3.2 Ensure the section is readable and non-overlapping on mobile, tablet, and desktop widths.
 - [x] 3.3 Reuse existing animation conventions if animation is added, without introducing new runtime dependencies.
 
 ## 4. Verification
 
 - [x] 4.1 Run `openspec validate --all`.
-- [ ] 4.2 Run the site through a local static server and verify the new section appears second in the landing-page scroll flow.
-- [ ] 4.3 Verify existing hero, price-check, why-choose, addresses, reviews, footer, and legal links still work.
+- [x] 4.2 Run the site through a local static server and verify the new section appears second in the landing-page scroll flow.
+- [x] 4.3 Verify existing hero, price-check, why-choose, addresses, reviews, footer, and legal links still work.
 - [x] 4.4 Confirm no new framework, package manager, external library, price-list change, or back-end behavior was introduced.
